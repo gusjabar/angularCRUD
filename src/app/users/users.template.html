@@ -1,0 +1,19 @@
+<h2>Users</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td><i class="glyphicon glyphicon-pencil"></i></td>
+            <td><i class="glyphicon glyphicon-remove"></i></td>
+        </tr>
+    </tbody>
+</table>

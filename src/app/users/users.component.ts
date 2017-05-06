@@ -1,8 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { UserServices } from './users.services';
+import { User } from './user';
+
 @Component({
     selector: 'users',
-    template: '<h1>Users</h1>'
+    templateUrl: 'users.template.html'
 })
-export class UsersComponent {
-
+export class UsersComponent implements OnInit {
+    users: User[];
+    _servicesUser: UserServices
+    constructor(private servicesUser: UserServices) {
+        this._servicesUser = servicesUser;
+    }
+    ngOnInit() {
+        this._servicesUser
+            .getUser()
+            .subscribe(s => {
+                
+                this.users = s;
+                console.log(this.users);
+            });
+            
+    }
 }
