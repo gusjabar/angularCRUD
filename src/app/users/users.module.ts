@@ -7,6 +7,7 @@ import { UsersComponent } from './users.component';
 import { UserFormComponent } from './user-form.component';
 
 import { UserServices } from './users.services';
+import { PreventUnsavedChangesGuardServices } from './prevent-unsaved-changes-guard.service';
 
 @NgModule({
     imports: [
@@ -16,6 +17,8 @@ import { UserServices } from './users.services';
     declarations: [
         UsersComponent,
         UserFormComponent],
-    providers: [UserServices]
+    providers: [
+        UserServices,
+        PreventUnsavedChangesGuardServices]
 })
 export class UsersModule { }

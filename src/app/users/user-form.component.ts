@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-
 import { EmailValidator } from './email.validator';
 
 @Component({
@@ -9,11 +8,11 @@ import { EmailValidator } from './email.validator';
    
 })
 export class UserFormComponent {
-    userForm: FormGroup;
+    form: FormGroup;
 
     constructor(fb: FormBuilder) {
 
-        this.userForm = fb.group({
+        this.form = fb.group({
             userName: ['', Validators.required],
             email: ['', Validators.compose([
                 Validators.required,
@@ -26,7 +25,7 @@ export class UserFormComponent {
                 zipcode: ['']
             })
         });
-        console.log(this.userForm);
+        console.log(this.form);
     }
 
 }
