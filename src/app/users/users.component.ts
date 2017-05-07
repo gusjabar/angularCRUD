@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+
 import { UserServices } from './users.services';
 import { User } from './user';
 
@@ -7,19 +8,17 @@ import { User } from './user';
     templateUrl: 'users.template.html'
 })
 export class UsersComponent implements OnInit {
-    users: User[];
     _servicesUser: UserServices
+    users: User[];
+    
+
     constructor(private servicesUser: UserServices) {
-        this._servicesUser = servicesUser;
+        this._servicesUser = servicesUser;       
     }
     ngOnInit() {
         this._servicesUser
             .getUser()
-            .subscribe(s => {
-                
-                this.users = s;
-                console.log(this.users);
-            });
-            
+            .subscribe(s => this.users = s);
+
     }
 }
