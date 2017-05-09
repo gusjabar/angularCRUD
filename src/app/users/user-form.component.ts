@@ -1,16 +1,31 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Inject }                    from '@angular/core';
+import { Router}                                from '@angular/router';
+import { FormGroup, FormBuilder, Validators }   from '@angular/forms';
 
-import { EmailValidator } from './email.validator';
+import { EmailValidator }                       from './email.validator';
+
+import * as Rx                                  from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+
+import { UserServices }                         from './users.services';
+
+import { User }                                 from './user';
 
 @Component({
     templateUrl: 'user-form.template.html'
-   
+
 })
 export class UserFormComponent {
-    form: FormGroup;
 
-    constructor(fb: FormBuilder) {
+    form: FormGroup;
+    private _user: User;
+    private _services: UserServices;
+    private _saveResponse;
+    private _router: Router;
+
+    constructor(fb: FormBuilder
+                ,services: UserServices
+                ,router: Router) {
 
         this.form = fb.group({
             userName: ['', Validators.required],
@@ -25,7 +40,17 @@ export class UserFormComponent {
                 zipcode: ['']
             })
         });
-        console.log(this.form);
+        this._router=router;
+        this._services = services;
+    }
+    onSubmit() {
+        this._user = this.form.value;
+        this._services
+            .saveUser(this._user)
+            .subscribe(s => this._saveResponse = s);
+        console.log("Save", this._saveResponse);
+        this.form.reset();
+        this._router.navigate(['users'])
     }
 
 }

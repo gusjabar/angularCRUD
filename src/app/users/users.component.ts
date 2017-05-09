@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-
-import { UserServices } from './users.services';
-import { User } from './user';
+import { Component, Inject, OnInit }    from '@angular/core';
+import { UserServices }                 from './users.services';
+import { User }                         from './user';
 
 @Component({
     selector: 'users',

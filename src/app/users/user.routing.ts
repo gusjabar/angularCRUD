@@ -1,7 +1,7 @@
 import { Router, RouterModule } from '@angular/router';
 
-import { UsersComponent } from './users.component';
-import { UserFormComponent } from './user-form.component';
+import { UsersComponent }       from './users.component';
+import { UserFormComponent }    from './user-form.component';
 
 import { PreventUnsavedChangesGuardServices } from './prevent-unsaved-changes-guard.service';
 
