@@ -24,8 +24,8 @@ export class UserFormComponent {
     private _router: Router;
 
     constructor(fb: FormBuilder
-                ,services: UserServices
-                ,router: Router) {
+        , services: UserServices
+        , router: Router) {
 
         this.form = fb.group({
             userName: ['', Validators.required],
@@ -40,17 +40,23 @@ export class UserFormComponent {
                 zipcode: ['']
             })
         });
-        this._router=router;
+        this._router = router;
         this._services = services;
     }
     onSubmit() {
         this._user = this.form.value;
+        console.log("user will be save",this._user);
         this._services
             .saveUser(this._user)
-            .subscribe(s => this._saveResponse = s);
-        console.log("Save", this._saveResponse);
-        this.form.reset();
-        this._router.navigate(['users'])
+            .subscribe(s => 
+                        {
+                            this._saveResponse = s;
+                            console.log("Save", this._saveResponse);
+                            this.form.markAsPristine();
+                            //this.form.reset();
+                            this._router.navigate(['users'])
+                        });
+        
     }
 
 }
