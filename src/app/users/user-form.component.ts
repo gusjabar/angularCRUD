@@ -25,6 +25,7 @@ export class UserFormComponent implements OnInit {
     private _saveResponse;
     private _router: Router;
     private _route: ActivatedRoute;
+    private _id: number;
 
     constructor(fb: FormBuilder
         , services: UserServices
@@ -37,34 +38,10 @@ export class UserFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        
-         this._route.params.subscribe(
-            params => {
-                this._services
-                    .getUserId(+params['id'])
-                    .subscribe(
-                    (user: User) => {
-                        this.title = "Edit user " + user.name;
-                        this.form.patchValue({
-                            userName: user.name,
-                            email: user.email,
-                            phone: user.phone,
-                            address: {
-                                street: user.address.street,
-                                suite: user.address.suite,
-                                city: user.address.city,
-                                zipcode: user.address.zipcode
-                            }
-                        })
-                        console.log("edit", user)
-                    }
-                    );
-            }
-        );
-
 
         this.form = this._fb.group({
-            userName: ['', Validators.required],
+            id: [''],
+            name: ['', Validators.required],
             email: ['', Validators.compose([
                 Validators.required,
                 EmailValidator.Format
@@ -77,6 +54,35 @@ export class UserFormComponent implements OnInit {
                 zipcode: ['']
             })
         });
+
+
+        this._route.params.subscribe(p => this._id = +p['id'])
+
+        if (!this._id)
+            return;
+
+        this._services
+            .getUserId(this._id)
+            .subscribe(
+            (user: User) => {
+                this.title = "Edit user " + user.name;
+                this.form.patchValue({
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    address: {
+                        street: user.address.street,
+                        suite: user.address.suite,
+                        city: user.address.city,
+                        zipcode: user.address.zipcode
+                    }
+                })
+                console.log("edit", user)
+            });
+
+
+
     }
 
     onSubmit() {

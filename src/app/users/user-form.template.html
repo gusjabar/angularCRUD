@@ -1,21 +1,22 @@
 <h3>{{title}}</h3>
 <div class="col-md-6 col-lg-6 well">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input type="hidden" id="id" formControlName="id">
         <fieldset>
             <legend>User</legend>
-            <div class="form-group" [ngClass]="{'has-error': (form.controls.userName.touched 
-                                    && form.controls.userName.errors),
-                        'has-success': (form.controls.userName.touched 
-                                    && !form.controls.userName.errors)}">
-                <label for="userName" class="control-label">Name</label>
+            <div class="form-group" [ngClass]="{'has-error': (form.controls.name.touched 
+                                    && form.controls.name.errors),
+                        'has-success': (form.controls.name.touched 
+                                    && !form.controls.name.errors)}">
+                <label for="name" class="control-label">Name</label>
                 <input type="text" class="form-control" 
-                    id="userName" 
+                    id="name" 
                     placeholder="Entry the user name (required)" 
-                    formControlName="userName">
+                    formControlName="name">
                 <div class="alert alert-danger" 
-                    [hidden]="!(form.controls.userName.touched 
-                         && form.controls.userName.errors)">
-                    <p [hidden]="!form.controls.userName.errors?.required">
+                    [hidden]="!(form.controls.name.touched 
+                         && form.controls.name.errors)">
+                    <p [hidden]="!form.controls.name.errors?.required">
                         User name is required
                     </p>
                 </div>
