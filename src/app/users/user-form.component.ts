@@ -55,8 +55,9 @@ export class UserFormComponent implements OnInit {
             })
         });
 
-
         this._route.params.subscribe(p => this._id = +p['id'])
+
+        this.title = this._id ? "Edit User " : " New User";
 
         if (!this._id)
             return;
@@ -65,7 +66,7 @@ export class UserFormComponent implements OnInit {
             .getUserId(this._id)
             .subscribe(
             (user: User) => {
-                this.title = "Edit user " + user.name;
+                this.title +=  user.name;
                 this.form.patchValue({
                     id: user.id,
                     name: user.name,
@@ -79,9 +80,13 @@ export class UserFormComponent implements OnInit {
                     }
                 })
                 console.log("edit", user)
-            });
-
-
+            },
+            (error: any) => {
+                if (error.status == 404)
+                    this._router.navigate(['notfound']);
+                console.error(error);
+            }
+            );
 
     }
 
