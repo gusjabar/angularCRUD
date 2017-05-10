@@ -2,9 +2,11 @@ import { Component, Inject, OnInit }    from '@angular/core';
 import { UserServices }                 from './users.services';
 import { User }                         from './user';
 
+
 @Component({
     selector: 'users',
-    templateUrl: 'users.template.html'
+    templateUrl: 'users.template.html',
+
 })
 export class UsersComponent implements OnInit {
     _servicesUser: UserServices

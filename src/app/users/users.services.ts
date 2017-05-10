@@ -23,4 +23,12 @@ export class UserServices {
             .map(res => res.json());
 
     }
+    getUserId(id:number):Rx.Observable<User>{
+        if(id > 0){
+            var url = this._urlBase + 'users/' + id;
+            return this._http.get(url)
+                             .map(res=>res.json());
+        }
+    }
+     
 }

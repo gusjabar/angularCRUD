@@ -12,5 +12,11 @@ export const usersRouting = RouterModule.forChild([
         component: UserFormComponent,
         canDeactivate: [PreventUnsavedChangesGuardServices]
     },
+    {
+        path: 'edit/:id', 
+        component: UserFormComponent,
+        canDeactivate: [PreventUnsavedChangesGuardServices]
+    }
+
 
 ])
