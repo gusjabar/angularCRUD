@@ -66,7 +66,7 @@ export class UserFormComponent implements OnInit {
             .getUserId(this._id)
             .subscribe(
             (user: User) => {
-                this.title +=  user.name;
+                this.title += user.name;
                 this.form.patchValue({
                     id: user.id,
                     name: user.name,
@@ -101,7 +101,7 @@ export class UserFormComponent implements OnInit {
                 this.form.markAsPristine();
                 this._router.navigate(['users'])
             });
-
     }
+
 
 }

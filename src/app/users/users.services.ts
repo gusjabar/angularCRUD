@@ -35,4 +35,12 @@ export class UserServices {
         }
     }
 
+    deleteUser(id: number): Rx.Observable<Response> {
+        if (id > 0) {
+            var url = this._urlBase + 'users/' + id;
+            return this._http.delete(url)
+                .map(res => res.json());
+        }
+    }
+
 }

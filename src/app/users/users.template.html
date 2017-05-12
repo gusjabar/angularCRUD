@@ -13,8 +13,9 @@
         <tr *ngFor="let user of users">
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
-            <td><a href="edit/{{user.id}}" ><i class="glyphicon glyphicon-pencil"></i></a></td>
-            <td><i class="glyphicon glyphicon-remove"></i></td>
+            <td><a href="edit/{{user.id}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
+            <td><button (click)="deleteUser(user)" class="btn btn-link"><i class="glyphicon glyphicon-remove"></i></button></td>
+
         </tr>
     </tbody>
 </table>
