@@ -1,14 +1,10 @@
 <div class="container">
     <h1>Posts</h1>
-    {{isLoading}}
     <spining [is-loading]="isLoading"></spining>
     <div class="row">
         <div class="col-md-6">
             <div class="list-group">
-                <a href="#" 
-                class="list-group-item" 
-                *ngFor="let post of posts" 
-                (click)="onClick_Post(post)">
+                <a href="#" class="list-group-item" *ngFor="let post of posts" (click)="onClick_Post(post)">
                         {{post.title}}
                 </a>
 
@@ -19,6 +15,23 @@
                 <div class="panel-heading">{{post.title}}</div>
                 <div class="panel-body">
                     {{post.body}}
+                    <hr>
+                    <spining [is-loading]="isLoadingComments"></spining>
+                  
+                        <div class="media" *ngFor="let comment of post.comments">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img 
+                                        class="media-object" 
+                                        src="http://lorempixel.com/80/80/people/?random={{comment.id}}" alt="">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{comment.name}}</h4>
+                                <p><span class="small text-muted">{{comment.email}}</span></p>
+                                {{comment.body}}
+                            </div>
+                        </div>              
                 </div>
             </div>
         </div>

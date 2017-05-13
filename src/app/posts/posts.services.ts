@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Post } from './post';
+import { PostComments} from './post-comment';
 
 import * as Rx from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -32,4 +33,12 @@ export class PostsServices {
             });
     }
 
+ GetComments(post:Post): Rx.Observable<PostComments[]> {
+        return this._http
+            .get(this._urlBase + 'posts/' + post.id + '/comments')
+            .map(result => {
+                console.log(result);
+                return <PostComments[]>result.json();
+            });
+    }
 }
