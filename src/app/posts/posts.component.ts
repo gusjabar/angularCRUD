@@ -1,8 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
 import { PostsServices } from './posts.services';
+import { UserServices } from '../users/users.services';
+
 import { Post } from './post';
 import { PostComments } from './post-comment';
+import { User } from '../users/user';
 
 import { SpiningComponent } from '../shared/spining.component';
 
@@ -23,47 +26,88 @@ import 'rxjs/add/operator/map';
 
 })
 export class PostsComponent implements OnInit {
-    private _service: PostsServices;
+    private _postService: PostsServices;
+    private _userService: UserServices;
+
     posts: Post[];
     post: Post;
-    isLoading: boolean = false;
-    isLoadingComments: boolean = false;
 
-    constructor(private service: PostsServices) {
-        this._service = service;
+    users: User[];
+    user: User;
+
+    isPostLoading: boolean = false;
+    isCommentsLoading: boolean = false;
+    isUserLoading: boolean = false;
+
+    constructor(private postService: PostsServices,
+        private userSerivice: UserServices) {
+        this._postService = postService;
+        this._userService = userSerivice;
     }
 
     ngOnInit() {
-        this.isLoading = true;
+        this._LoadUsers();
+        this._LoadAllPosts();
 
-        this.service
-            .GetPosts()
-            .subscribe(
-            s => {
-                this.isLoading = false;
-                this.posts = s;
-            },
-            err => console.error(err));
     }
     onClick_Post(post: Post) {
-        this.isLoadingComments = true;
-       
-        this._service
+        this.isCommentsLoading = true;
+
+        this._postService
             .GetPost(post.id)
             .subscribe(
             s => this.post = s
             );
-        this._service
+        this._postService
             .GetComments(post)
             .subscribe(
             s => {
                 console.log("comments", s)
-                this.isLoadingComments = false;
+                this.isCommentsLoading = false;
                 this.post.comments = s;
             }
             )
 
         return false;
+    }
+    onChange_SelectUser(filter) {
+        this.posts = null;
+        
+        console.log("selected user")
+        console.log(filter.userId);
+        this._postService
+            .GetPostsByUser(filter.userId)
+            .subscribe(
+            s => {
+                console.log(s)
+                this.isPostLoading = false;
+                this.posts = s;
+            },
+            err => console.error(err));
+    }
+
+    private _LoadUsers() {
+        this.isUserLoading = true;
+        this._userService
+            .getUser()
+            .subscribe(
+            s => {
+                this.isUserLoading = false;
+                this.users = s;
+            },
+            err => console.log(err))
+    }
+
+    private _LoadAllPosts() {
+        this.isPostLoading = true;
+        this.postService
+            .GetPosts()
+            .subscribe(
+            s => {
+                this.isPostLoading = false;
+                this.posts = s;
+            },
+            err => console.error(err));
     }
 
 }

@@ -23,6 +23,14 @@ export class PostsServices {
                 return <Post[]>result.json();
             });
     }
+     GetPostsByUser(userId:number): Rx.Observable<Post[]> {
+        return this._http
+            .get(this._urlBase + 'posts?userId=' + userId)
+            .map(result => {
+                console.log(result);
+                return <Post[]>result.json();
+            });
+    }
 
     GetPost(id: number): Rx.Observable<Post> {
         return this._http

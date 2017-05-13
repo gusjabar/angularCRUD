@@ -1,24 +1,50 @@
 <div class="container">
     <h1>Posts</h1>
-    <spining [is-loading]="isLoading"></spining>
+    
     <div class="row">
         <div class="col-md-6">
+            <p><select 
+                name="users" 
+                id="users" 
+                class="form-control"
+                #u
+                (change)="onChange_SelectUser({userId: u.value})">
+                <option value="-1" 
+                    *ngIf="isUserLoading">
+                    Waiting loading users...
+                </option>
+                <option value="" disabled>Post for all users</option>
+                <option 
+                    *ngFor="let user of users" 
+                    value="{{user.id}}">
+                        {{user.name}}
+                </option>
+            </select></p>
             <div class="list-group">
-                <a href="#" class="list-group-item" *ngFor="let post of posts" (click)="onClick_Post(post)">
+                <p><spining [is-loading]="isPostLoading"></spining></p>
+                <a href="#" 
+                    class="list-group-item" 
+                    *ngFor="let post of posts" 
+                    (click)="onClick_Post(post)">
                         {{post.title}}
                 </a>
 
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel panel-default" *ngIf="post">
+            <div class="panel panel-default" 
+                *ngIf="post">
                 <div class="panel-heading">{{post.title}}</div>
                 <div class="panel-body">
                     {{post.body}}
                     <hr>
-                    <spining [is-loading]="isLoadingComments"></spining>
-                  
-                        <div class="media" *ngFor="let comment of post.comments">
+                    <spining [is-loading]="isCommentsLoading"></spining>
+                        <div *ngIf="!post.comments" 
+                            class="well text-center">
+                            be the First to comment!
+                        </div>
+                        <div class="media" 
+                        *ngFor="let comment of post.comments">
                             <div class="media-left">
                                 <a href="#">
                                     <img 
